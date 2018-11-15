@@ -5,7 +5,7 @@ import HeroImage from '../elements/HeroImage/HeroImage';
 import SearchBar from '../elements/SearchBar/SearchBar';
 import Spinner from '../elements/Spinner/Spinner';
 import MovieThumb from '../elements/MovieThumb/MovieThumb';
-import FourColorGrid from '../elements/FourColGrid/FourColGrid';
+import FourColGrid from '../elements/FourColGrid/FourColGrid';
 import LoadMoreBtn from '../elements/LoadMoreBtn/LoadMoreBtn';
 
 class Home extends Component {
@@ -15,7 +15,8 @@ class Home extends Component {
     loading: false,
     currentPage: 0,
     totalPages: 0,
-    searchTerm: ''
+    searchTerm: '',
+    id: ''
   }
 
 componentDidMount() { //First
@@ -30,10 +31,10 @@ searchItems = (searchTerm) => {
   this.setState({
     movies: [],   //we want the movies to clear and only show the movies that we searched for
     loading:true,
-    searchTerm
+    searchTerm: searchTerm
   })
 
-  if(searchTerm){ //if there is no search term just call back the endpoint from componentDidMount
+  if(searchTerm === ''){ //if there is no search term just call back the endpoint from componentDidMount
     endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
   }else{
     endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${searchTerm}`;
@@ -56,7 +57,7 @@ fetchItems = (endpoint) => {   //Second
   fetch(endpoint)
   .then(result => result.json())
   .then(result => {
-    // console.log(result); pull out all the data based on the endpoint
+    console.log(result); //pull out all the data based on the endpoint
     this.setState({
       movies: [...this.state.movies, ...result.results], // spread operator to make a copy of the old movie state and then append new movies using ...
       heroImage: this.state.heroImage || result.results[0], //if its null it will fill it with first movie with an API fetch else it will stay with the orginal
@@ -64,10 +65,12 @@ fetchItems = (endpoint) => {   //Second
       currentPage: result.page,
       totalPages: result.total_pages
     })
+    // console.log(result.results[0].id);  //the id of the first movie;
   })
 }
   render(){
     return(
+
       <div className = "rmdb-home">
       {this.state.heroImage ?
       <div>
@@ -79,10 +82,26 @@ fetchItems = (endpoint) => {   //Second
         <SearchBar
           callback = {this.searchItems} />
       </div> : null }  {/* it will check if the heroimage exists if so it will render out the heroImage else it will render out null */}
-        <FourColorGrid />
+
+        <div className="rmdb-home-grid">
+          <FourColGrid
+            header={this.state.searchTerm ? 'Search Result' : 'Popular Movies'}
+            loading={this.state.loading}
+            >
+            {this.state.movies.map( (element, i) => {
+              return <MovieThumb
+                        key={i}
+                        onClick= {true}
+                        image={element.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${element.poster_path}` :  '/images/no_image.jpg'}
+                        movieId={element.id}
+                        movieName={element.orginal_title}
+                      />
+            })}
+          </FourColGrid>
+        </div>
+
         <Spinner />
         <LoadMoreBtn />
-
           Home
       </div>
     )

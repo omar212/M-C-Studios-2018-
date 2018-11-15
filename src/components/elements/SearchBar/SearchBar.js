@@ -5,8 +5,8 @@ import './SearchBar.css';
 class SearchBar extends Component {
   state = {
       value: ''  //value from the input feild
+   };
 
-   }
    timeout = null;
    doSearch = (event) => {
      this.setState({value: event.target.value})
