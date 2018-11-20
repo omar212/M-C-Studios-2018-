@@ -1,5 +1,6 @@
 import React from 'react';
 import './MovieThumb.css';
+import { Link } from 'react-router-dom';
 
 const MovieThumb = (props) => {
 
@@ -10,7 +11,14 @@ const MovieThumb = (props) => {
   // }
   return(
     <div className="rmdb-moviethumb">
-      <img src={props.image} alt="moviethumb" onClick={props.clickable}/>
+      {console.log("is it clickable", props.clickable)}
+      {props.clickable ?
+      <Link to={{ pathname: `/${props.movieId}`, movieName: `${props.movieName}`}}> {/*sending the movie id with the link*/}
+        <img src={props.image} alt="moviethumb" /> {/*this shows the link */}
+      </Link>
+      :
+      <img src={props.image} alt="moviethumb"/>
+      }
     </div>
   )
 }

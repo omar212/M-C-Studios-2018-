@@ -22,6 +22,7 @@
   margin: 0 auto;
 }
 
+
 .rmdb-heroimage-text {
   z-index: 100;
   max-width: 700px;
@@ -34,14 +35,15 @@
 }
 
 .rmdb-heroimage-text h1 {
-  font-family: 'Abel', sans-serif;
-  font-size:48px;
-  color: #fff;
+  font-family: 'Leichenhaus';
+  font-size:70px;
+  color: black;
 }
 
 .rmdb-heroimage-text p {
   font-family: 'Abel', sans-serif;
   font-size: 22px;
+  font-weight: bold;
   line-height: 26px;
   color: #fff;
 }
@@ -61,4 +63,5 @@
     line-height: 20px;
     color: #fff;
   }
+
 }
