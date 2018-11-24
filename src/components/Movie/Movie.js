@@ -53,15 +53,25 @@ class Movie extends Component {
   }
   render(){
     return(
-      <div>
-        <Bar />
-        <h1>Movie</h1>
-        <Navigation />
-        <MovieInfo />
-        <MovieInfoBar />
-        {/* <FourColGrid /> */}
-        <Spinner />
-        {/* <Actor /> */}
+      <div className="rmdb-movie">
+        {/*If there is a movie render out the navigation, movieinfo, and movieinfobar else return null*/}
+        {this.state.movie ?
+          <div>
+            <MovieInfo movie={this.state.movie} directors={this.state.directors} />
+            <MovieInfoBar movie={this.state.movie.runtime} budget={this.state.movie.budget} revenue={this.state.movie.revenue} />
+          </div>
+          : null}
+
+        {/*If there are actors for the movie */}
+        {this.state.actors ?
+          <div className="rmdb-movie-grid">
+            <FourColGrid header={'Actors'}>
+              {this.state.actors.map((element, i) => {
+                return <Actor key={i} actor={element} />
+              })}
+            </FourColGrid>
+          </div>
+          : null}
       </div>
     );
   }
