@@ -14,7 +14,10 @@ class Movie extends Component {
     movie: null,
     actors: null,
     directors: [],
-    loading: false
+    loading: false,
+    wishList: [],
+    addCart: []
+
   }
 
   componentDidMount(){
@@ -29,6 +32,7 @@ class Movie extends Component {
     .then(result => result.json())
     .then(result => {
       console.log(result);
+      console.log(result.id);
       //remember setState can also accept call back functions
       if(result.status_code){ //if this exist means there is no movie
         this.setState({ loading: false})
@@ -51,6 +55,11 @@ class Movie extends Component {
     })
     .catch(error => console.error('Error', error))
   }
+  // fetchButton = (id) => {
+  //   this.state.wishList.push(this.result.id);
+  //   console.log(this.state.wishList);
+  // }
+
   render(){
     return(
       <div>
@@ -59,6 +68,7 @@ class Movie extends Component {
         <Navigation />
         <MovieInfo />
         <MovieInfoBar />
+      {/* <button type = "Click" onClick={this.fetchButton()}/> */}
         {/* <FourColGrid /> */}
         <Spinner />
         {/* <Actor /> */}
