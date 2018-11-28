@@ -19,6 +19,9 @@ class Movie extends Component {
     addCart: []
 
   }
+  // var movie_id = this.props.match.params.movieId;
+
+  // this.handleAddCart = this.handleAddCart.bind(this);
 
   componentDidMount(){
     this.setState({ loading: true })
@@ -26,6 +29,9 @@ class Movie extends Component {
     const endpoint = `${API_URL}movie/${this.props.match.params.movieId}?api_key=${API_KEY}&language=en-US`;
     this.fetchItems(endpoint);
   }
+ //  handleAddCart(e){
+ //    addCart.push(movie_id);
+ // }
 
   fetchItems = (endpoint) => {
     fetch(endpoint)
@@ -39,6 +45,8 @@ class Movie extends Component {
       }else{
         this.setState({ movie: result}, () => {
           const endpoint = `${API_URL}movie/${this.props.match.params.movieId}/credits?api_key=${API_KEY}`;
+
+
           fetch(endpoint)
           .then(result => result.json())
           .then(result => { //crew and job our predefined properties from the api and member is just a variable
@@ -84,6 +92,10 @@ class Movie extends Component {
             </FourColGrid>
           </div>
           : null}
+          <button
+            style= {{width: "50px", color: "blue"}}
+            onClick= {this.handleAddCart}>
+        </button>
 
       </div>
     );

@@ -89,6 +89,24 @@
   color: #fff;
 }
 
+.addCartButton{
+  width: 100px;
+  background-color:blue;
+  border-radius: 8%;
+  color: white;
+  font-size: 15px;
+  padding-left:10px;
+}
+.addWishListButton{
+  width: 100px;
+  background-color:red;
+  border-radius: 8%;
+  color: white;
+  font-size: 15px;
+  margin:10px;
+
+}
+
 meter::-webkit-meter-bar {
   background: #FFF;
   width:200px;

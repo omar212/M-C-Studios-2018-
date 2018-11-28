@@ -31,11 +31,15 @@ const MovieInfo = (props) => {
                 <meter min="0" max="100" optimum="100" low="40" high="70" value={props.movie.vote_average * 10}></meter>
                 <p className="rmdb-score">{props.movie.vote_average}</p>
               </div>
+              <br />
+              <button type="onClick" className="addCartButton">Add to Cart</button>
+              <button type="onClick" className="addWishListButton">Add to Cart</button>
             </div>
             {props.directors.length > 1 ? <h3>DIRECTORS</h3> : <h3>DIRECTOR</h3>}
             {props.directors.map((element, i) => {
               return <p key={i} className="rmdb-director">{element.name}</p>
             })}
+
           </div>
         </div>
     );
