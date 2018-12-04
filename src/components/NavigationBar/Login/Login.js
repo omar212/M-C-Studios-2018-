@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Bar from '../../elements/Bar/Bar';
 import firebase from "firebase";
 import fire from '../../../configFire/fire';
+import { Link } from 'react-router-dom';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Home from '../../Home/Home';
 
@@ -53,16 +54,19 @@ class Login extends Component {
   }
 
   render() {
+
     if(this.state.redirect) {
       {/* Redirect to home page */}
     }
     return (
       <div>
         {this.state.isSignedIn ? (
-          <span>
-            <button style= {{ backgroundColor:'black', color: 'white', float: 'right'}} onClick={() => firebase.auth().signOut()}>Sign out!</button>
-            <h1 style={{textAlign: 'center',height: '100px', backgroundColor:'black', color: 'white'}}>Welcome {firebase.auth().currentUser.displayName}</h1>
-          </span>
+            <div style={{backgroundColor:'black'}}>
+              <button style= {{ backgroundColor:'black', color: 'white', float: 'right'}} onClick={() => firebase.auth().signOut()}>Sign out!</button>
+              <h1 style={{margin:'0 0 auto',textAlign: 'center',height: '100px', backgroundColor:'black', color: 'white'}}>Welcome {firebase.auth().currentUser.displayName}</h1>
+              <Home />
+            </div>
+
         ) :
           (
           <div>

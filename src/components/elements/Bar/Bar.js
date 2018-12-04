@@ -3,7 +3,7 @@ import { Layout, Header, Navigation, Drawer, Content } from 'react-mdl';
 import { Link } from 'react-router-dom';
 import Main from '../../App/App';
 import './Bar.css';
-// import '../../App.css';
+
 
 class Bar extends Component  {
   render(){

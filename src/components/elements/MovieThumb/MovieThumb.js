@@ -3,12 +3,6 @@ import './MovieThumb.css';
 import { Link } from 'react-router-dom';
 
 const MovieThumb = (props) => {
-
-  // const Clicked = () => {
-  //   return(
-  //     this.setState()
-  //   )
-  // }
   return(
     <div className="rmdb-moviethumb">
       {console.log("is it clickable", props.clickable)}

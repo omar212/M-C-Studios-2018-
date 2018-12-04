@@ -11,7 +11,6 @@ import reduxCart from '../NavigationBar/Cart/ReduxCart';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faStar } from '@fortawesome/free-solid-svg-icons';
-import MoviesToAdd from './MoviesToAdd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
@@ -37,10 +36,6 @@ class Movie extends Component {
     MovieId: null
 
   }
-  //this.addMovieId = this.addMovieId.bind(this);
-  // var movie_id = this.props.match.params.movieId;
-
-
 
   componentDidMount(){
     this.setState({ loading: true })
@@ -48,9 +43,6 @@ class Movie extends Component {
     const endpoint = `${API_URL}movie/${this.props.match.params.movieId}?api_key=${API_KEY}&language=en-US`;
     this.fetchItems(endpoint);
   }
- //  handleAddCart(e){
- //    addCart.push(movie_id);
- // }
 
   fetchItems = (endpoint) => {
     fetch(endpoint)
@@ -85,109 +77,42 @@ class Movie extends Component {
     .catch(error => console.error('Error', error))
   }
 
-  addMovieId = (id,title) => {
-    // let moviecart = {...this.state.MovieCart};
-    // console.log("this moviecart: ", moviecart);
-    this.setState({
-     MovieCart: {
-          ...this.state.MovieCart,
-          id: id,
-          name: title.original_title
-        }
-    })
-    console.log("Movie Cart: ", this.state.MovieCart);
-    // this.state.MovieCart.map((movie) => {
-    //   this.setState({
-    //       ...this.state.MovieCart,
-    //      id: movie.id,
-    //      title: title.original_title
-    //    })
-    // })
-
-    // this.setState({...this.state.MovieCart, id: id, name: title.original_title});
-    //   this.setState(prevState => ({
-    //     moviecart: {
-    //       ...prevState.moviecart,
-    //       id: id,
-    //       name: title.original_title
-    //     }
-    // }))
-    // this.setState({MovieCart: id, MovieCart: title.original_title})
-    // this.state.MovieCart.map((id,title) => {
-    //   this.setState({
-    //     id: id,
-    //     title: title.orginal_title
-    //   })
-    // })
-    console.log(id);
-    console.log(title.original_title);
-
-    // return <MoviesToAdd id={id} title={title.original_title} />
-
-    // const id = this.state.MovieId;
-    // const name = this.state.movie.title;
-    // console.log("const id: ", id);
-    // console.log("const name: ", name);
-
-    // this.state.MovieCart[0][] = id
-    // this.state.MovieCart["name"] = name
-    // {this.state.MovieId.map((movie)  => <MoviesToAdd id={movie} title={movie.name})}
-    // {this.state.MovieCart.map((movie)  =>
-    //   this.setState({console.log("MOVIE ID: "+ movie.id+ "MOVIE NAME: " + movie.name)})})}
-    // {this.state.MovieCart.map((movie)  =>
-    //   this.setState({
-    //       id: this.state.MovieId,
-    //       name: movie.name
-    //     })
-    // )}
-
-    // this.setState(MovieCart => )
-    // console.log(this.state.MovieCart);
-
-    // MovieCart.id.push(id);
-    // MovieCart.name.push(name);
-    // const add = this.state.add;
-    // this.setState({add: !add})
-    // this.setState({MovieCart.push(id), MovieCart.name: name }))
-
-    console.log("I came in here");
-  }
-
   render(){
     return(
-
-
       <div className="rmdb-movie">
         <Bar />
         {/*If there is a movie render out the navigation, movieinfo, and movieinfobar else return null*/}
         {this.state.movie ?
           <div>
             <MovieInfo movie={this.state.movie} directors={this.state.directors} cart={this.state.addCart} addId = {this.state.MovieId} />
-          
+
           </div>
           : null}
           <div>
 
+                <div className="Btns">
 
-                   <button
-                      className="WishlistBtn"
-                      onClick={() => this.props.onAddWishId(this.state.MovieId, this.state.movie.title)}>
-                      <span>
-                       <FontAwesomeIcon icon="star" size="2x" />
-                      </span>
-                      Add to Wish List
-                   </button>
+                    <span>
+                       <button
+                          className="WishlistBtn"
+                          onClick={() => this.props.onAddWishId(this.state.MovieId, this.state.movie.title)}>
 
+                           <FontAwesomeIcon icon="star" size="2x" />
 
-                    <button
-                      className="CartBtn"
-                      onClick={() => this.props.onAddMovieId(this.state.MovieId, this.state.movie.title)}>
-                      <span>
-                       <FontAwesomeIcon icon="cart-plus" size="2x" />
-                      </span>
-                      Add to Cart
-                    </button>
+                       </button>
+                     </span>
 
+                    <span>
+                        <button
+                          className="CartBtn"
+                          onClick={() => this.props.onAddMovieId(this.state.MovieId, this.state.movie.title)}>
+                          <span>
+                           <FontAwesomeIcon icon="cart-plus" size="2x" />
+                          </span>
+
+                        </button>
+                    </span>
+                </div>
                {this.props.cart.map((movie) => (
                  <React.Fragment>
                      <li> Cart List User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
@@ -205,7 +130,7 @@ class Movie extends Component {
               </div>
               : null}
             </div>
-          {/* {this.state.add ? <MoviesToAdd id={this.state.MovieId} name={this.state.movie.title} /> : null} */}
+
 
         {/*If there are actors for the movie */}
         {this.state.actors ?
@@ -217,7 +142,7 @@ class Movie extends Component {
            </FourColGrid>
          </div>
          : null}
-         {this.state.actors && !this.state.loading ? <h1>No Movie Found!</h1>: null}
+         {this.state.actors && !this.state.loading ? null : <h1>No Movie Found!</h1>}
          {this.state.loading ? <Spinner /> : null}
       </div>
    )
