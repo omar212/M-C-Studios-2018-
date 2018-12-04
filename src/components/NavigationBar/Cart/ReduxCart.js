@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Bar from '../../elements/Bar/Bar';
-import {Id, Name} from '../../Movie/MoviesToAdd';
 import * as actionTypes from '../../../store/actions';
 // import '../Home/Home.css';
 // import MovieThumb from '../elements/MovieThumb/MovieThumb.css';
