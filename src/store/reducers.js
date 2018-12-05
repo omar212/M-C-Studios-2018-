@@ -5,6 +5,8 @@ const initialState = {
   MovieId: 0,
   MovieCart: [],
   WishList: [],
+  MovieImageCart: [],
+  MovieImageWish: [],
 }
 
 const reducer = (state = initialState, action) => {
@@ -15,8 +17,10 @@ const reducer = (state = initialState, action) => {
     const newMovieCart = {
       userId: Math.random(),
       movieId: action.cartData.id,
-      title: action.cartData.title
+      title: action.cartData.title,
+      image: action.cartData.image
     }
+
     return{
       ...state,
       MovieCart: state.MovieCart.concat(newMovieCart)
@@ -28,7 +32,8 @@ const reducer = (state = initialState, action) => {
     const newMovieWish = {
       userId: Math.random(),
       movieId: action.wishData.id,
-      title: action.wishData.title
+      title: action.wishData.title,
+      image: action.wishData.image,
     }
     return{
       ...state,
@@ -39,6 +44,7 @@ const reducer = (state = initialState, action) => {
   if(action.type === actionTypes.SHOW_CART){
     console.log("i am in the cart page");
     console.log("Cart state: ",state.MovieCart)
+    console.log("the cart image is ", state.MovieCart.image);
     return{
       ...state.MovieCart,
     }
@@ -49,6 +55,24 @@ const reducer = (state = initialState, action) => {
     console.log("Wish List state: ",state.WishList)
     return{
       ...state.WishList,
+    }
+  }
+
+  if(action.type === actionTypes.ADD_IMAGE_CART){
+    console.log("i am in the add image cart reducer");
+    console.log("movie image for cart state: ",state.MovieImageCart)
+    return{
+      ...state,
+      MovieImageCart: state.MovieImageCart.concat(action.imageId)
+    }
+  }
+
+  if(action.type === actionTypes.ADD_IMAGE_WISH){
+    console.log("i am in the add image wish reducer");
+    console.log("movie image state: ",state.MovieImageWish)
+    return{
+      ...state,
+      MovieImageWish: state.MovieImageWish.concat(action.imageId)
     }
   }
 

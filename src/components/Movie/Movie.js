@@ -33,7 +33,8 @@ class Movie extends Component {
         name: ''
       }
     ],
-    MovieId: null
+    MovieId: null,
+    MovieImage: null
 
   }
 
@@ -50,6 +51,7 @@ class Movie extends Component {
     .then(result => {
       console.log(result);
       console.log(result.id);
+      console.log(result.poster_path);
       //remember setState can also accept call back functions
       if(result.status_code){ //if this exist means there is no movie
         this.setState({ loading: false})
@@ -66,10 +68,12 @@ class Movie extends Component {
               actors: result.cast,
               directors,
               loading: false,
-              MovieId: result.id
+              MovieId: result.id,
+              MovieImage: this.state.movie.poster_path
             })
             console.log("MovieId for the cart: ", this.state.MovieId)
             console.log("this movie title is: ", this.state.movie.title)
+            console.log("this movie image poster path is: ", this.state.MovieImage)
           })
         })
       }
@@ -95,7 +99,8 @@ class Movie extends Component {
                     <span>
                        <button
                           className="WishlistBtn"
-                          onClick={() => this.props.onAddWishId(this.state.MovieId, this.state.movie.title)}>
+                          onClick={() => {this.props.onAddWishId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                          this.props.onAddImageWish(this.state.MovieImage)}}>
 
                            <FontAwesomeIcon icon="star" size="2x" />
 
@@ -105,7 +110,8 @@ class Movie extends Component {
                     <span>
                         <button
                           className="CartBtn"
-                          onClick={() => this.props.onAddMovieId(this.state.MovieId, this.state.movie.title)}>
+                          onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                         this.props.onAddImageCart(this.state.MovieImage)}}>
                           <span>
                            <FontAwesomeIcon icon="cart-plus" size="2x" />
                           </span>
@@ -115,7 +121,7 @@ class Movie extends Component {
                 </div>
                {this.props.cart.map((movie) => (
                  <React.Fragment>
-                     <li> Cart List User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
+                     <li> Cart List User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title} | Movie Image: {movie.image}</li>
                 </React.Fragment>
                  ))}
 
@@ -142,7 +148,7 @@ class Movie extends Component {
            </FourColGrid>
          </div>
          : null}
-         {this.state.actors && !this.state.loading ? null : <h1>No Movie Found!</h1>}
+         {this.state.actors && !this.state.loading ? <Spinner /> : null}
          {this.state.loading ? <Spinner /> : null}
       </div>
    )
@@ -152,14 +158,18 @@ class Movie extends Component {
 const mapStateToProps = state => {
   return{
     cart: state.MovieCart,
-    wish: state.WishList
+    wish: state.WishList,
+    movie_img_cart: state.MovieImageCart,
+    movie_img_wish: state.MovieImageWish,
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddMovieId: (id, title) => dispatch({type: actionTypes.ADD_MOVIE_ID, cartData:{id: id, title: title}}),
-    onAddWishId: (id, title) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title}})
+    onAddMovieId: (id, title, image) => dispatch({type: actionTypes.ADD_MOVIE_ID, cartData:{id: id, title: title, image: image}}),
+    onAddWishId: (id, title, image) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title, image: image}}),
+    onAddImageCart: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId}),
+    onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId})
   };
 }
 

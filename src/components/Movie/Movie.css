@@ -27,9 +27,12 @@
   margin-left: 20px;
   margin-top:5px;
 }
+.CartBtn:hover {
+    background-color: gray; 
+}
 
 .Btns {
-  background: #1c1c1c;
+  background: black;
   display: flex;
   justify-content: center;
   padding-top: 10px

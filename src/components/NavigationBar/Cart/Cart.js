@@ -16,7 +16,7 @@ class Cart extends Component {
   }
 }
 
-export default connect()(Cart);
+export default Cart;
 
 
 //     onToken = (token) => {

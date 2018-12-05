@@ -10,6 +10,10 @@ const BACKDROP_SIZE = 'w1280';
 
 const POSTER_SIZE = 'w500' // try w780
 
+const CART_IMAGE_SIZE = 'w185' // try w780
+
+
+
 export  {
   API_URL,
   API_KEY,
@@ -17,5 +21,6 @@ export  {
   BACKDROP_SIZE,
   POSTER_SIZE,
   IMAGE_BASE_BACKGROUND_URL,
-  BACKGROUND_IMAGE_ID
+  BACKGROUND_IMAGE_ID,
+  CART_IMAGE_SIZE
 }

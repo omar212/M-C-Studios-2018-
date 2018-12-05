@@ -1,0 +1,19 @@
+.WishListbody {
+  width:50%;
+  height:100%;
+  margin: 20px;
+  padding: 20px;
+}
+
+.picture-grid {
+  display: grid;
+  border: 5px solid black;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  justify-content: center;
+  grid-gap: 5px;
+  grid-row-gap: 0px;
+}
+
+.grid-box img {
+  width: 100%;
+}
