@@ -20,13 +20,15 @@ class Home extends Component {
     searchTerm: '',
     id: '',
     back_overview: '',
-    back_title: ''
+    back_title: '',
+    movieTrailer: []
   }
 
 componentDidMount() { //First
   this.setState({loading: true});
   const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
   const Background_endpoint = `${API_URL}movie/335983?api_key=${API_KEY}&language=en-US`;
+  const movie_trailer_endpoint = `${API_URL}movie/335983?api_key=${API_KEY}&append_to_response=videos`;
   this.fetchItems(endpoint);
   // console.log(Background_endpoint);
   this.fetchBackgroundDetails(Background_endpoint);
@@ -74,7 +76,7 @@ fetchItems = (endpoint) => {   //Second
       heroImage: this.state.heroImage || result.results[3], //if its null it will fill it with first movie with an API fetch else it will stay with the orginal
       loading: false,
       currentPage: result.page,
-      totalPages: result.total_pages
+      totalPages: result.total_pages,
     })
     console.log(result.page);  //the id of the first movie;
     // console.log(result.results.id[5]);
@@ -93,6 +95,17 @@ fetchItems = (endpoint) => {   //Second
         })
       })
     }
+
+    fetchMovieTrailers = (movie_trailer_endpoint) => {
+      fetch(movie_trailer_endpoint)
+      .then(result => result.json())
+      .then(result => {
+          this.setState({
+            movieTrailers: result.video
+          })
+          console.log(this.state.movieTrailer);
+        })
+      }
 
   // console.log(this.state.overview);
 

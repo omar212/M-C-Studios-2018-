@@ -22,8 +22,8 @@ class App extends Component {
         <React.Fragment> {/* instead of using many divs */}
           <Header />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path = "/Login" component={Login} />
+            <Route exact path="/" component={Login} />
+            <Route exact path = "/Home" component={Home} />
             <Route exact path = "/WishList" component={WishList} />
             <Route exact path = "/Cart" component={reduxCart} />
             <Route exact path= "/:movieId" component={Movie} />

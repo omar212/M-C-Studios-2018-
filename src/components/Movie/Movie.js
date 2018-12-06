@@ -34,7 +34,8 @@ class Movie extends Component {
       }
     ],
     MovieId: null,
-    MovieImage: null
+    MovieImage: null,
+    cost: 4.99
 
   }
 
@@ -92,7 +93,8 @@ class Movie extends Component {
 
           </div>
           : null}
-          <div>
+          {this.props.cart ?
+          (<div>
 
                 <div className="Btns">
 
@@ -107,21 +109,28 @@ class Movie extends Component {
                        </button>
                      </span>
 
+
                     <span>
                         <button
                           className="CartBtn"
                           onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
-                                         this.props.onAddImageCart(this.state.MovieImage)}}>
+                                          this.props.onAddImageCart(this.state.MovieImage);
+                                          this.props.onAddCost(this.state.cost)}
+                                   }>
                           <span>
                            <FontAwesomeIcon icon="cart-plus" size="2x" />
                           </span>
-
                         </button>
                     </span>
                 </div>
                {this.props.cart.map((movie) => (
                  <React.Fragment>
-                     <li> Cart List User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title} | Movie Image: {movie.image}</li>
+                     <li> Cart List User Id: {movie.userId}
+                       | Movie Id: {movie.movieId}
+                       | Movie Title: {movie.title}
+                       | Movie Image: {movie.image}
+                       | Movie Cost: {this.props.total_cost}
+                     </li>
                 </React.Fragment>
                  ))}
 
@@ -135,7 +144,7 @@ class Movie extends Component {
                 <MovieInfoBar time={this.state.movie.runtime} budget={this.state.movie.budget} revenue={this.state.movie.revenue} />
               </div>
               : null}
-            </div>
+            </div>): null}
 
 
         {/*If there are actors for the movie */}
@@ -161,6 +170,7 @@ const mapStateToProps = state => {
     wish: state.WishList,
     movie_img_cart: state.MovieImageCart,
     movie_img_wish: state.MovieImageWish,
+    total_cost: state.TotalCost
   };
 }
 
@@ -169,7 +179,8 @@ const mapDispatchToProps = dispatch => {
     onAddMovieId: (id, title, image) => dispatch({type: actionTypes.ADD_MOVIE_ID, cartData:{id: id, title: title, image: image}}),
     onAddWishId: (id, title, image) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title, image: image}}),
     onAddImageCart: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId}),
-    onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId})
+    onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId}),
+    onAddCost: (cost) => dispatch({type: actionTypes.ADD_COST, cost: cost})
   };
 }
 
