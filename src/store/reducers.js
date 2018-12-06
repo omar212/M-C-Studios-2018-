@@ -2,6 +2,7 @@ import * as actionTypes from './actions';
 import { Redirect } from "react-router-dom";
 
 const initialState = {
+  AllMovies:{},
   MovieId: 0,
   MovieCart: [],
   WishList: [],
@@ -44,7 +45,8 @@ const reducer = (state = initialState, action) => {
       movieId: action.wishData.id,
       title: action.wishData.title,
     }
-
+    console.log("new movie wish: ", newMovieWish);
+    console.log("new movie wish with orginial state: ", state.WishList.concat(newMovieWish));
 
     return{
       ...state,
@@ -73,10 +75,14 @@ const reducer = (state = initialState, action) => {
   if(action.type === actionTypes.ADD_IMAGE_CART){
     console.log("i am in the add image cart reducer");
     console.log("movie image for cart state: ",state.MovieImageCart)
+    const addImageCart = {
+      imageId: action.imageId,
+      movieId: action.movieId
+    }
     return{
       ...state,
       deletedItems: 1,
-      MovieImageCart: state.MovieImageCart.concat(action.imageId)
+      MovieImageCart: state.MovieImageCart.concat(addImageCart)
     }
   }
 
@@ -95,48 +101,50 @@ const reducer = (state = initialState, action) => {
     console.log("movie cost state: ",state.TotalCost)
     return{
       ...state,
-      TotalCost: state.TotalCost += action.cost
+      TotalCost: state.TotalCost += action.cost,
+      userBalence: state.userBalence -= 4.99
     }
   }
 
   if(action.type === actionTypes.DELETE_CART){
     console.log("i am in the delete cart action");
     console.log("the id caught was: ", action.id);
-    const newArray = [...state.MovieCart];
-    console.log("NEW ARRAY IS: ", newArray);
-    const updatedMovieArray = newArray.filter(result => result.id !== action.id);
-    const updatedMovieImageArray = state.MovieImageCart.filter(result => result.id !== action.id);
-    if(updatedMovieArray.length === 1){
-      console.log("found");
-      console.log("state movie cart::: ", state.MovieCart);
-      console.log("state movie image cart::: ", state.MovieImageCart);
-      const check = state.MovieCart.splice(0,1)
-      console.log("length is now: ", check.length);
-      console.log("total cost is now: ", state.TotalCost + 4.99);
-      return{
-        ...state,
-        deletedItems: 0,
-        MovieCart: state.MovieCart = [],
-        MovieImageCart: state.MovieImageCart = [],
-        TotalCost: state.TotalCost + 4.99
-      }
-    }
 
-    // newArray.splice(id, 1);
+    const newArray = [...state.MovieCart];
+    const newArray1 = [...state.MovieImageCart];
+
+    console.log("NEW ARRAY IS: ", newArray);
+
+    const updatedMovieArray = newArray.filter(result => result.movieId !== action.id);
+    const updatedMovieImageArray = newArray1.filter(result => result.movieId !== action.id);
+
     console.log("the updatedMovieArray is: ", updatedMovieArray);
     console.log("the updatedMovieImageArray is: ", updatedMovieImageArray);
     console.log("the MovieCart is: ", state.MovieCart);
     console.log("total cost is now: ", state.TotalCost + 4.99);
+
     return{
       ...state,
-      MovieCart: state.MovieCart.splice(updatedMovieArray,1),
-      MovieImageCart: state.MovieImageCart.splice(updatedMovieImageArray,1),
-      TotalCost: state.TotalCost + 4.99
+      MovieCart: updatedMovieArray,
+      MovieImageCart: updatedMovieImageArray,
+      userBalence: state.userBalence + 4.99,
+      TotalCost: state.TotalCost - 4.99
       // MovieImageCart:  state.MovieImage.concat(updatedMovieImageArray)
       // {console.log("state of movie id: ", state.MovieCart)},
       // {console.log("state of movie image id: ", state.MovieImageCart)}
     }
   }
+
+  if(action.type === actionTypes.ADD_ALL_MOVIES){
+    console.log("i am in the add all movies action");
+    console.log("all movies: ",state.AllMovies)
+    return{
+      ...state,
+      AllMovies: state.AllMovies.concat(action.allmovies)
+    }
+  }
+
+
 
   return state;
 }

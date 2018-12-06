@@ -3,28 +3,30 @@
   flex: auto;
   flex-wrap: wrap;
   flex-direction: row;
+  grid-row-gap: 10px;
 }
 
 .movieItemGrid .movieItems {
-  padding: 10px 30px;
+  padding: 20px 30px;
   width: 200px;
-
+  grid-row-gap: 10px;
 }
 
 .page-container{
   width: 800px;
   margin: 10px auto;
-  background: white;
-  color: black;
+  background: black;
+  color: white;
+  grid-row-gap: 10px;
 }
 
 .title{
   font-size: 50px;
   text-align: center;
-  color: black;
+  color: white;
 }
 
 body {
-  background-color: white;
-  color: black;
+  background-color: black;
+  color: white;
 }

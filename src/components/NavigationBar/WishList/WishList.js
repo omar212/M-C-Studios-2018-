@@ -25,7 +25,8 @@ class reduxCart extends Component {
     return(
        <React.Fragment className="WishListbody">
            <React.Fragment> <Bar /> </React.Fragment>
-
+           <h1 style={{fontFamily: 'Oleo Script, cursive', color: 'white', textAlign:'center', fontSize: '80px'}}> Wish List</h1>
+           <hr style={{width:'100%', color: 'white', height: '20px'}} />
            {this.props.addMovies.map((movie) => (
               <li>User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
             ))}
@@ -34,8 +35,10 @@ class reduxCart extends Component {
               {this.props.movie_img.map((movie) => (
                   <WishListCard
                     imageWish={`${IMAGE_BASE_URL}${CART_IMAGE_SIZE}${movie}`}
-                    title={this.props.addMovies.title}
+                    Movietitle={this.props.addMovies.title}
                     onload={this.showId}
+                    id={this.props.addMovies.movieId}
+
                     />
               ))}
               </div>

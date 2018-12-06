@@ -17,7 +17,7 @@ const MovieInfoBar = (props) => {
           <span className="fa-time">
             <FontAwesomeIcon icon="clock" size="2x"/>
           </span>
-          <span className="rmdb-movieinfofobar-info">Running time: {calcTime(props.time)}</span>
+          <span className="rmdb-movieinfobar-info">Running time: {calcTime(props.time)}</span>
         </div>
         <div className="rmdb-movieinfobar-content-col">
           <span className="fa-budget">

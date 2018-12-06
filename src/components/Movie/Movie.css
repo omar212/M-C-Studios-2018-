@@ -13,22 +13,26 @@
 .WishlistBtn {
   padding: 15px;
   background-color: blue;
-  font-size: 20px;
+  font-size: 30px;
   border-radius: 50px;
   margin-right: 20px;
   margin-top:5px;
 }
 
+.WishlistBtn:hover{
+  background-color: gray;
+}
+
 .CartBtn {
   padding: 15px;
   background-color: green;
-  font-size: 20px;
+  font-size: 30px;
   border-radius: 50px;
   margin-left: 20px;
   margin-top:5px;
 }
 .CartBtn:hover {
-    background-color: gray; 
+    background-color: gray;
 }
 
 .Btns {

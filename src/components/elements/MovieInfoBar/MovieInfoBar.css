@@ -24,18 +24,20 @@
 }
 
 .rmdb-movieinfobar-info {
-  padding: 5px 0 0 10px;
+  padding: 15px 0 0 25px;
   float: left;
 }
 
 .fa-time, .fa-revenue {
   float: left;
   margin-top: -4px;
+  font-size: 30px;
   padding-right:15px;
 
 }
 
 .fa-budget {
   float: left;
+  font-size: 30px;
   margin-top: -3px;
 }

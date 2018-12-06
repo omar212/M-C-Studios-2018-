@@ -95,33 +95,13 @@ class Movie extends Component {
           : null}
           {this.props.cart ?
           (<div>
-
                 <div className="Btns">
+                           <FontAwesomeIcon onClick={() => {this.props.onAddWishId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                           this.props.onAddImageWish(this.state.MovieImage)}} icon="star" size="4x" className="WishlistBtn" />
 
-                    <span>
-                       <button
-                          className="WishlistBtn"
-                          onClick={() => {this.props.onAddWishId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
-                                          this.props.onAddImageWish(this.state.MovieImage)}}>
-
-                           <FontAwesomeIcon icon="star" size="2x" />
-
-                       </button>
-                     </span>
-
-
-                    <span>
-                        <button
-                          className="CartBtn"
-                          onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
-                                          this.props.onAddImageCart(this.state.MovieImage);
-                                          this.props.onAddCost(this.state.cost)}
-                                   }>
-                          <span>
-                           <FontAwesomeIcon icon="cart-plus" size="2x" />
-                          </span>
-                        </button>
-                    </span>
+                           <FontAwesomeIcon onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                           this.props.onAddImageCart(this.state.MovieImage, this.state.MovieId);
+                                           this.props.onAddCost(this.state.cost)}} icon="cart-plus" size="4x"   className="CartBtn" />
                 </div>
                {this.props.cart.map((movie) => (
                  <React.Fragment>
@@ -178,7 +158,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddMovieId: (id, title, image) => dispatch({type: actionTypes.ADD_MOVIE_ID, cartData:{id: id, title: title, image: image}}),
     onAddWishId: (id, title, image) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title, image: image}}),
-    onAddImageCart: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId}),
+    onAddImageCart: (imageId, movieId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId, movieId: movieId}),
     onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId}),
     onAddCost: (cost) => dispatch({type: actionTypes.ADD_COST, cost: cost})
   };

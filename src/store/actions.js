@@ -6,3 +6,4 @@ export const ADD_IMAGE_CART = 'ADD_IMAGE_CART';
 export const ADD_IMAGE_WISH = 'ADD_IMAGE_WISH';
 export const ADD_COST = 'ADD_COST';
 export const DELETE_CART = 'DELETE_CART';
+export const ADD_ALL_MOVIES = 'ADD_ALL_MOVIES';

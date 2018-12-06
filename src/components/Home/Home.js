@@ -8,6 +8,8 @@ import MovieThumb from '../elements/MovieThumb/MovieThumb';
 import FourColGrid from '../elements/FourColGrid/FourColGrid';
 import LoadMoreBtn from '../elements/LoadMoreBtn/LoadMoreBtn';
 import Bar from '../elements/Bar/Bar';
+import * as actionTypes from '../../store/actions';
+import { connect } from 'react-redux';
 
 
 class Home extends Component {
@@ -32,7 +34,9 @@ componentDidMount() { //First
   this.fetchItems(endpoint);
   // console.log(Background_endpoint);
   this.fetchBackgroundDetails(Background_endpoint);
-  console.log(this.fetchBackgroundDetails(Background_endpoint));
+  // this.fetchMovieTrailers(movie_trailer_endpoint);
+  // console.log(this.fetchBackgroundDetails("background endpoint: ",Background_endpoint));
+  // console.log(() => this.fetchMovieTrailers(movie_trailer_endpoint));
 }
 
 searchItems = (searchTerm) => {
@@ -71,6 +75,7 @@ fetchItems = (endpoint) => {   //Second
   .then(result => result.json())
   .then(result => {
     console.log(result); //pull out all the data based on the endpoint
+    
     this.setState({
       movies: [...this.state.movies, ...result.results], // spread operator to make a copy of the old movie state and then append new movies using ...
       heroImage: this.state.heroImage || result.results[3], //if its null it will fill it with first movie with an API fetch else it will stay with the orginal
@@ -79,6 +84,9 @@ fetchItems = (endpoint) => {   //Second
       totalPages: result.total_pages,
     })
     console.log(result.page);  //the id of the first movie;
+
+
+
     // console.log(result.results.id[5]);
     // console.log(result.results.id[335983].orginal_title);
   })
@@ -151,7 +159,12 @@ fetchItems = (endpoint) => {   //Second
       </div>
     )
   }
-
 }
 
-export default Home;
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddAllMovies: (allmovies) => dispatch({type: actionTypes.ADD_ALL_MOVIES, allmovies: allmovies}),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(Home);

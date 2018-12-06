@@ -11,7 +11,7 @@ class Bar extends Component  {
       <div style={{height: '50px', position: 'relative'}}>
         <Layout fixedHeader>
           <Header style={{backgroundColor: 'black'}} title={<span style={{ fontSize: '30px' , fontFamily: 'Petit Formal Script, cursive'}}>Just Chill</span>}>
-             <Navigation>
+             <Navigation className=".Navigation">
                 <Link to="/">Home Page</Link>
                 <Link to="/Login">Login</Link>
                 <Link to="/WishList">Wish List</Link>
