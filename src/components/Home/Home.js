@@ -7,8 +7,7 @@ import Spinner from '../elements/Spinner/Spinner';
 import MovieThumb from '../elements/MovieThumb/MovieThumb';
 import FourColGrid from '../elements/FourColGrid/FourColGrid';
 import LoadMoreBtn from '../elements/LoadMoreBtn/LoadMoreBtn';
-import Bar from '../elements/Bar/Bar';
-
+import Login from '../NavigationBar/Login/Login';
 
 class Home extends Component {
   state = {
@@ -98,43 +97,40 @@ fetchItems = (endpoint) => {   //Second
 
   render(){
     return(
-
       <div className = "rmdb-home">
-      {this.state.heroImage ?
-      <div>
-        <Bar />
-        <HeroImage
-          image = {`${IMAGE_BASE_BACKGROUND_URL}`}
-          title = {this.state.back_title}
-          text = {this.state.back_overview}
-        />
+        {this.state.heroImage ?
+        <div>
+          <HeroImage
+            image = {`${IMAGE_BASE_BACKGROUND_URL}`}
+            title = {this.state.back_title}
+            text = {this.state.back_overview}
+          />
+          <SearchBar
+            callback = {this.searchItems} />
+        </div> : null }  {/* it will check if the heroimage exists if so it will render out the heroImage else it will render out null */}
 
-        <SearchBar
-          callback = {this.searchItems} />
-      </div> : null }  {/* it will check if the heroimage exists if so it will render out the heroImage else it will render out null */}
+          <div className="rmdb-home-grid">
+            <FourColGrid
+              header={this.state.searchTerm ? 'Search Result' : 'Popular Movies'}
+              loading={this.state.loading}
+              >
+              {this.state.movies.map( (element, i) => {
+                return <MovieThumb
+                          key={i}
+                          clickable= {true}
+                          image={element.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${element.poster_path}` :  '/images/no_image.jpg'}
+                          movieId={element.id}
+                          movieName={element.original_title}
+                        />
+              })}
+            </FourColGrid>
+            {this.state.loading ? <Spinner /> : null} {/*Checks to see if spinner is there */}
+            {(this.state.currentPage < this.state.totalPages && !this.state.loading) ?
+              <LoadMoreBtn text  ="Load More" onClick={this.loadMoreItems} />
+              : null }
 
-        <div className="rmdb-home-grid">
-          <FourColGrid
-            header={this.state.searchTerm ? 'Search Result' : 'Popular Movies'}
-            loading={this.state.loading}
-            >
-            {this.state.movies.map( (element, i) => {
-              return <MovieThumb
-                        key={i}
-                        clickable= {true}
-                        image={element.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${element.poster_path}` :  '/images/no_image.jpg'}
-                        movieId={element.id}
-                        movieName={element.original_title}
-                      />
-            })}
-          </FourColGrid>
-          {this.state.loading ? <Spinner /> : null} {/*Checks to see if spinner is there */}
-          {(this.state.currentPage < this.state.totalPages && !this.state.loading) ?
-            <LoadMoreBtn text  ="Load More" onClick={this.loadMoreItems} />
-            : null }
-
-        {/*the above checks to see if we are not on the last page and the spinner is showing then you can show the load more button*/}
-      </div>
+          {/*the above checks to see if we are not on the last page and the spinner is showing then you can show the load more button*/}
+        </div>
       </div>
     )
   }

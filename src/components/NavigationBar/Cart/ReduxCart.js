@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Bar from '../../elements/Bar/Bar';
-
 import * as actionTypes from '../../../store/actions/actions';
 // import '../Home/Home.css';
 // import MovieThumb from '../elements/MovieThumb/MovieThumb.css';
@@ -11,38 +10,45 @@ import * as actionTypes from '../../../store/actions/actions';
 
 class reduxCart extends Component {
   state = {
-    text: 'Wish List Page'
+    text: 'Shopping Cart'
   }
 
   componentDidMount(){
     console.log("i did load");
   }
- // className="rmdb-home-grid"
+// className="rmdb-home-grid"
   render(){
     return(
-       <React.Fragment onLoad={this.showId}>
-           <React.Fragment> <Bar /> </React.Fragment>
 
-           {this.props.addMovies.map((movie) => (
+       <div  onLoad={this.showId}>
+         <Bar />
+        {this.props.addMovies.map((movie) => (
               <li>User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
-
-            ))}
-      </React.Fragment>
+        ))}
+      </div>
     );
   }
 }
-
-
-
+/* <MovieThumb
+//       key={i}
+//       image={movie.poster_path ? `${IMAGE_BASE_URL}${POSTER_SIZE}${movie.poster_path}` : null }
+//       movieId={movie.movieId}
+//       movieName={movie.title}
+//     />*/
+// <FourColGrid
+//   header={this.state.text}
+//   loading={this.state.loading}
+//   >
+// </FourColGrid>
 const mapStateToProps = state => {
   return{
-    addMovies: state.WishList
+    addMovies: state.MovieCart
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    showId: () => dispatch({type: actionTypes.SHOW_WISH_LIST})
+    showId: () => dispatch({type: actionTypes.SHOW_CART})
   };
 }
 

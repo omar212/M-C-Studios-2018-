@@ -1,0 +1,37 @@
+.rmdb-movie {
+  margin-bottom: 100px;
+  background-color: black;
+  color: white;
+}
+
+.rmdb-movie-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.WishlistBtn {
+  padding: 15px;
+  background-color: blue;
+  font-size: 20px;
+  border-radius: 50px;
+  margin-right: 20px;
+  margin-top:5px;
+}
+
+.CartBtn {
+  padding: 15px;
+  background-color: green;
+  font-size: 20px;
+  border-radius: 50px;
+  margin-left: 20px;
+  margin-top:5px;
+}
+
+.Btns {
+  background: #1c1c1c;
+  display: flex;
+  justify-content: center;
+  padding-top: 10px
+
+}

@@ -1,110 +1,29 @@
-import React, { Component } from 'react';
-import Bar from '../../elements/Bar/Bar';
-import firebase from "firebase";
-import fire from '../../../configFire/fire';
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import Home from '../../Home/Home';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import SignedIn from './SignedIn';
+import SignedOut from './SignedOut';
+import { connect } from 'react-redux';
 
-const loginStyles = {
-  width: "90%",
-  maxWidth: "200px",
-  margin: "20px auto",
-  border: "1px solid #ddd",
-  borderRadius: "5px",
-  padding: "10px"
-}
+const Login = (props) => {
 
-class Login extends Component {
-  constructor(props) {
-    super(props)
-    this.authWithEmailPassword = this.authWithEmailPassword.bind(this)
-  }
-
-  state = {
-    isSignedIn: false,
-    redirect: false
-  }
-
-  authWithEmailPassword(event) {
-    event.preventDefault()
-    console.table([{
-      email: this.emailInput.value,
-      password: this.passwordInput.value
-    }])
-  }
-
-  uiConfig = {
-    signInFlow: "popup",
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
-    ],
-    callbacks: {
-      signInSuccess: () => false
-    }
-  }
-
-  componentDidMount = () => {
-    firebase.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user })
-      console.log("user", user)
-    })
-  }
-
-  render() {
-    if(this.state.redirect) {
-      {/* Redirect to home page */}
-    }
-    return (
-      <div>
-        {this.state.isSignedIn ? (
-          <span>
-            <button style= {{ backgroundColor:'black', color: 'white', float: 'right'}} onClick={() => firebase.auth().signOut()}>Sign out!</button>
-            <h1 style={{textAlign: 'center',height: '100px', backgroundColor:'black', color: 'white'}}>Welcome {firebase.auth().currentUser.displayName}</h1>
-          </span>
-        ) :
-          (
-          <div>
-            <div>
-              <h1 style={{textAlign: 'center'}}>Welcome to M&C Studios Sign Up Page </h1>
-            </div>
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-              style={{position:'center'}}/>
-            <div style={loginStyles}>
-              <form onSubmit={(event) => {this.authWithEmailPassword(event)}} ref={(form) => {this.loginForm = form}}>
-                <label className="#">
-                  Email
-                  <input
-                    style={{width: "100%"}}
-                    className="#"
-                    name="email"
-                    type="email"
-                    ref={(input) => {this.emailInput = input}}
-                    placeholder="E-mail">
-                  </input>
-                </label>
-                <label className="#">
-                  Password
-                  <input
-                    style={{width: "100%"}}
-                    className="#"
-                    name="password"
-                    type="password"
-                    ref={(input) => {this.passwordInput = input}}
-                    placeholder="Password">
-                  </input>
-                </label>
-                <input style={{width: "100%", marginTop: "5px"}} type="submit" className="#" value="Log In"></input>
-              </form>
-            </div>
-          </div>
-        )}
+  const { auth } = props
+  console.log(auth)
+  return (
+    <nav className="nav-wrapper black darken-3">
+      <div className="container">
+        <Link to='/' className="brand-logo">M-C Studios</Link>
+        <SignedIn />
+        <SignedOut />
       </div>
-    )
+    </nav>
+  )
+}
+
+const mapStateToProps = (state) => {
+  //console.log(state)
+  return {
+    auth: state.firebase.auth
   }
 }
 
-export default Login;
+export default connect(mapStateToProps)(Login);
