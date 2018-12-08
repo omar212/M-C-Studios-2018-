@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { API_URL, API_KEY } from '../../config';
+import { API_URL, API_KEY, TRAILER_LINK, TRAILER_WEB, APPEND_TRAILER, MOVIE_TRAILER, YOUTUBE } from '../../config';
 import Navigation from '../elements/Navigation/Navigation';
 import MovieInfo from '../elements/MovieInfo/MovieInfo';
 import MovieInfoBar from '../elements/MovieInfoBar/MovieInfoBar';
@@ -15,6 +15,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import * as actionTypes from '../../store/actions';
+import firebase from "firebase";
+import { TwitterShareButton } from 'react-share';
+import { TwitterIcon } from 'react-share';
+
 import './Movie.css';
 
 library.add(faCartPlus, faStar);
@@ -35,15 +39,21 @@ class Movie extends Component {
     ],
     MovieId: null,
     MovieImage: null,
-    cost: 4.99
-
+    cost: 4.99,
+    traile: '',
+    trailer_title_no_space: '',
+    youtubeKey: null
   }
 
   componentDidMount(){
     this.setState({ loading: true })
     //First fetch the movie ... //match.params basically matchs the movie id variable in the app.js
     const endpoint = `${API_URL}movie/${this.props.match.params.movieId}?api_key=${API_KEY}&language=en-US`;
+    const trailer_endpoint = `${MOVIE_TRAILER}${this.props.match.params.movieId}?api_key=${API_KEY}${APPEND_TRAILER}`
+    // const youtube_endpoint = `${MOVIE_TRAILER}${this.props.match.paramas.movieId}/videos?api_key=${API_KEY}`
     this.fetchItems(endpoint);
+    this.fetchTrailerItems(trailer_endpoint);
+
   }
 
   fetchItems = (endpoint) => {
@@ -64,17 +74,32 @@ class Movie extends Component {
           .then(result => result.json())
           .then(result => { //crew and job our predefined properties from the api and member is just a variable
             const directors = result.crew.filter( (member) => member.job === "Director");
-
+            console.log("Result: ", result);
             this.setState({
               actors: result.cast,
               directors,
               loading: false,
               MovieId: result.id,
-              MovieImage: this.state.movie.poster_path
+              MovieImage: this.state.movie.poster_path,
+              // trailer_title: this.state.movie.title,
+              // trailer_title_no_space: this.state.movie.title.split(' ').join('-')
             })
+            var database = firebase.database();
+            var ref = database.ref('User');
+
+            var data = {
+              movieId: this.state.MovieId,
+              title: this.state.movie.title,
+              image: this.state.MovieImage
+            }
+
+            ref.push(data);
+            // console.log("title for trailer: ", this.state.trailer_title)
+            // console.log("title for trailer no space: ", this.state.trailer_title_no_space)
             console.log("MovieId for the cart: ", this.state.MovieId)
             console.log("this movie title is: ", this.state.movie.title)
             console.log("this movie image poster path is: ", this.state.MovieImage)
+            // console.log("trailer link: ", `${TRAILER_LINK}${this.state.trailer_title_no_space}${TRAILER_WEB}`);
           })
         })
       }
@@ -82,15 +107,59 @@ class Movie extends Component {
     .catch(error => console.error('Error', error))
   }
 
+  fetchTrailerItems = (fetchTrailerItems) => {
+    fetch(fetchTrailerItems)
+    .then(result => result.json())
+    .then(result => {
+      console.log(result);
+      //remember setState can also accept call back functions
+      if(result.status_code){ //if this exist means there is no movie
+        this.setState({ loading: false})
+      }else{
+        this.setState({ movie: result}, () => {
+          const endpoint = `${MOVIE_TRAILER}${this.props.match.params.movieId}?api_key=${API_KEY}${APPEND_TRAILER}`;
+          fetch(endpoint)
+          .then(result => result.json())
+          .then(result => {
+            console.log("Result: ", result);
+            if(result.videos.results.length === 0){
+              this.setState({
+                trailer: result.homepage,
+                youtubeKey: null
+              })
+            }else{
+              this.setState({
+                trailer: result.homepage,
+                youtubeKey: result.videos.results[1].key
+              })
+            }
+
+            console.log("trailer link is: ", this.state.trailer);
+            console.log("youtube key is: ", this.state.youtubeKey);
+          })
+        })
+      }
+    })
+    .catch(error => console.error('Error', error))
+  }
+
+
   render(){
     return(
       <div className="rmdb-movie">
         <Bar />
+
+        {/*<a href = {`${TRAILER_LINK}${this.state.trailer_title_no_space}${TRAILER_WEB}`}>Click me </a>*/}
         {/*If there is a movie render out the navigation, movieinfo, and movieinfobar else return null*/}
         {this.state.movie ?
           <div>
-            <MovieInfo movie={this.state.movie} directors={this.state.directors} cart={this.state.addCart} addId = {this.state.MovieId} />
-
+            <MovieInfo
+              movie={this.state.movie}
+              directors={this.state.directors}
+              cart={this.state.addCart}
+              addId = {this.state.MovieId}
+              trailer = {this.state.youtubeKey}/>
+            
           </div>
           : null}
           {this.props.cart ?
@@ -101,8 +170,12 @@ class Movie extends Component {
 
                            <FontAwesomeIcon onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
                                            this.props.onAddImageCart(this.state.MovieImage, this.state.MovieId);
-                                           this.props.onAddCost(this.state.cost)}} icon="cart-plus" size="4x"   className="CartBtn" />
-                </div>
+                                           this.props.onAddCost(this.state.MovieId, this.state.cost)}} icon="cart-plus" size="4x"   className="CartBtn" />
+
+                                         {/* <TwitterShareButton  via = "https://moviesandchill.com/" title = "avengers" hashtags = {["#cantwait","#whowantstowatchitwithme"]} round={true} >
+                                         // <TwitterIcon urlsize={32} round={true} />
+                                         // </TwitterShareButton>*/}
+              </div>
                {this.props.cart.map((movie) => (
                  <React.Fragment>
                      <li> Cart List User Id: {movie.userId}
@@ -137,8 +210,8 @@ class Movie extends Component {
            </FourColGrid>
          </div>
          : null}
-         {this.state.actors && !this.state.loading ? <Spinner /> : null}
-         {this.state.loading ? <Spinner /> : null}
+         {this.state.actors && !this.state.loading ? null : <Spinner /> }
+
       </div>
    )
  }
@@ -160,7 +233,7 @@ const mapDispatchToProps = dispatch => {
     onAddWishId: (id, title, image) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title, image: image}}),
     onAddImageCart: (imageId, movieId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId, movieId: movieId}),
     onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId}),
-    onAddCost: (cost) => dispatch({type: actionTypes.ADD_COST, cost: cost})
+    onAddCost: (id, cost) => dispatch({type: actionTypes.ADD_COST, id: id, cost: cost})
   };
 }
 
