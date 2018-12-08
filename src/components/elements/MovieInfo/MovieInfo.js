@@ -1,9 +1,14 @@
 import React from 'react';
-import { IMAGE_BASE_URL, POSTER_SIZE, BACKDROP_SIZE } from '../../../config';
+import { IMAGE_BASE_URL, POSTER_SIZE, BACKDROP_SIZE, YOUTUBE } from '../../../config';
 import MovieThumb from '../MovieThumb/MovieThumb';
 import FontAwesome from 'react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVideo } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import './MovieInfo.css';
 
+library.add(faVideo);
 
 const MovieInfo = (props) => {
   return (
@@ -22,6 +27,13 @@ const MovieInfo = (props) => {
           </div>
             <div className="rmdb-movieinfo-text">
                   <h1>{props.movie.title}</h1>
+                  {props.trailer ?
+
+                    <a  href = {`${YOUTUBE}${props.trailer}`}  target="_blank">
+                      <FontAwesomeIcon icon = "video" name="film" size="2x" >
+                      </FontAwesomeIcon>
+                      <h1 style={{fontSize:'20px'}}>Watch Trailer</h1>
+                    </a> : null }
                   <h3>PLOT</h3>
                   <p>{props.movie.overview}</p>
                   <div className="rmdb-rating">
