@@ -3,13 +3,19 @@
   flex: auto;
   flex-wrap: wrap;
   flex-direction: row;
-  grid-row-gap: 10px;
+  grid-gap: 40px 50px;
 }
 
 .movieItemGrid .movieItems {
   padding: 20px 30px;
   width: 200px;
-  grid-row-gap: 10px;
+  grid-gap: 40px 50px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 40px 100px;
+  padding: 10px;
 }
 
 .page-container{
@@ -17,7 +23,7 @@
   margin: 10px auto;
   background: black;
   color: white;
-  grid-row-gap: 10px;
+  grid-row-gap: 50px;
 }
 
 .title{

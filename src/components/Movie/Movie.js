@@ -79,16 +79,16 @@ class Movie extends Component {
               MovieId: result.id,
               MovieImage: this.state.movie.poster_path,
             })
-            var database = firebase.database();
-            var ref = database.ref('User');
-
-            var data = {
-              movieId: this.state.MovieId,
-              title: this.state.movie.title,
-              image: this.state.MovieImage
-            }
-
-            ref.push(data);
+            // var database = firebase.database();
+            // var ref = database.ref('User');
+            //
+            // var data = {
+            //   movieId: this.state.MovieId,
+            //   title: this.state.movie.title,
+            //   image: this.state.MovieImage
+            // }
+            //
+            // ref.push(data);
             console.log("MovieId for the cart: ", this.state.MovieId)
             console.log("this movie title is: ", this.state.movie.title)
             console.log("this movie image poster path is: ", this.state.MovieImage)

@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVideo } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 import './MovieInfo.css';
 
 library.add(faVideo);
@@ -27,13 +28,24 @@ const MovieInfo = (props) => {
           </div>
             <div className="rmdb-movieinfo-text">
                   <h1>{props.movie.title}</h1>
+                  {/* {props.trailer ?
+                  //
+                  //   <a  href = {`${YOUTUBE}${props.trailer}`}  target="_blank">
+                  //     <FontAwesomeIcon icon = "video" name="film" size="2x" >
+                  //     </FontAwesomeIcon>
+                  //     <h1 style={{fontSize:'20px'}}>Watch Trailer</h1>
+                  //   </a> : null }*/}
                   {props.trailer ?
-
-                    <a  href = {`${YOUTUBE}${props.trailer}`}  target="_blank">
-                      <FontAwesomeIcon icon = "video" name="film" size="2x" >
-                      </FontAwesomeIcon>
-                      <h1 style={{fontSize:'20px'}}>Watch Trailer</h1>
-                    </a> : null }
+                  <div className='player-wrapper'>
+                     <ReactPlayer
+                       controls
+                       className='react-player'
+                       playing
+                       width='100%'
+                       height='100%'
+                       style={{ float: 'left', opacity:'.9' }}
+                       url={`${YOUTUBE}${props.trailer}`}/>
+                  </div>  : null }
                   <h3>PLOT</h3>
                   <p>{props.movie.overview}</p>
                   <div className="rmdb-rating">

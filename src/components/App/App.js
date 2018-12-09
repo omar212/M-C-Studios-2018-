@@ -10,12 +10,18 @@ import WishList from '../NavigationBar/WishList/WishList';
 import { createStore } from 'redux';
 import reducer from '../../store/reducers';
 import { Provider } from 'react-redux';
+import firebase from "firebase";
 
 
 const store = createStore(reducer);
 
 class App extends Component {
+
+  componentDidMount(){
+    console.log("app has mounted");
+  }
   render() {
+    var database = firebase.database();
     return (
     <Provider store={store}>
       <BrowserRouter>

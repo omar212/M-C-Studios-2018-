@@ -10,6 +10,7 @@ import LoadMoreBtn from '../elements/LoadMoreBtn/LoadMoreBtn';
 import Bar from '../elements/Bar/Bar';
 import * as actionTypes from '../../store/actions';
 import { connect } from 'react-redux';
+import firebase from "firebase";
 
 
 class Home extends Component {
@@ -23,18 +24,23 @@ class Home extends Component {
     id: '',
     back_overview: '',
     back_title: '',
-    movieTrailer: []
+    movieTrailer: ''
   }
+
 
 componentDidMount() { //First
   this.setState({loading: true});
+  // console.log("firebase from home page: ",firebase);
+  // console.log("database from home page: ",database);
   const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
   const Background_endpoint = `${API_URL}movie/335983?api_key=${API_KEY}&language=en-US`;
-  const movie_trailer_endpoint = `${API_URL}movie/335983?api_key=${API_KEY}&append_to_response=videos`;
+  const movie_trailer_endpoint = `${API_URL}movie/157336?api_key=${API_KEY}&append_to_response=videos`;
+
   this.fetchItems(endpoint);
   // console.log(Background_endpoint);
   this.fetchBackgroundDetails(Background_endpoint);
-  // this.fetchMovieTrailers(movie_trailer_endpoint);
+  this.fetchMovieTrailers(movie_trailer_endpoint);
+
   // console.log(this.fetchBackgroundDetails("background endpoint: ",Background_endpoint));
   // console.log(() => this.fetchMovieTrailers(movie_trailer_endpoint));
 }
@@ -70,12 +76,14 @@ loadMoreItems = () => {
   this.fetchItems(endpoint); //will load the next page or load the searched item page
 }
 
+
+
 fetchItems = (endpoint) => {   //Second
   fetch(endpoint)
   .then(result => result.json())
   .then(result => {
     console.log(result); //pull out all the data based on the endpoint
-    
+
     this.setState({
       movies: [...this.state.movies, ...result.results], // spread operator to make a copy of the old movie state and then append new movies using ...
       heroImage: this.state.heroImage || result.results[3], //if its null it will fill it with first movie with an API fetch else it will stay with the orginal
@@ -84,7 +92,6 @@ fetchItems = (endpoint) => {   //Second
       totalPages: result.total_pages,
     })
     console.log(result.page);  //the id of the first movie;
-
 
 
     // console.log(result.results.id[5]);
@@ -97,6 +104,7 @@ fetchItems = (endpoint) => {   //Second
     fetch(Background_endpoint)
     .then(result => result.json())
     .then(result => {
+      console.log("went in trailer");
         this.setState({
           back_title: result.original_title,
           back_overview: result.overview
@@ -111,7 +119,7 @@ fetchItems = (endpoint) => {   //Second
           this.setState({
             movieTrailers: result.video
           })
-          console.log(this.state.movieTrailer);
+          console.log("look at the trailers object: ",this.state.movieTrailer);
         })
       }
 
@@ -129,7 +137,6 @@ fetchItems = (endpoint) => {   //Second
           title = {this.state.back_title}
           text = {this.state.back_overview}
         />
-
         <SearchBar
           callback = {this.searchItems} />
       </div> : null }  {/* it will check if the heroimage exists if so it will render out the heroImage else it will render out null */}
@@ -161,10 +168,6 @@ fetchItems = (endpoint) => {   //Second
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onAddAllMovies: (allmovies) => dispatch({type: actionTypes.ADD_ALL_MOVIES, allmovies: allmovies}),
-  };
-}
 
-export default connect(null, mapDispatchToProps)(Home);
+
+export default Home;

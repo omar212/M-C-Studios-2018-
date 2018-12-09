@@ -5,7 +5,7 @@ import './WishList.css';
 import LazyLoad from 'react-lazyload';
 import * as actionTypes from '../../../store/actions';
 import WishListCard from './WishListCard';
-import { API_KEY, API_URL, IMAGE_BASE_URL, POSTER_SIZE, CART_IMAGE_SIZE } from '../../../config.js';
+import { API_KEY, API_URL, IMAGE_BASE_URL, POSTER_SIZE, CART_WISH_IMAGE_SIZE } from '../../../config.js';
 // import '../Home/Home.css';
 // import MovieThumb from '../elements/MovieThumb/MovieThumb.css';
 // import FourColGrid from '../elements/FourColGrid/FourColGrid';
@@ -23,25 +23,27 @@ class reduxCart extends Component {
  // className="rmdb-home-grid"
   render(){
     return(
-       <React.Fragment className="WishListbody">
+
+       <React.Fragment className="grid-container">
            <React.Fragment> <Bar /> </React.Fragment>
            <h1 style={{fontFamily: 'Oleo Script, cursive', color: 'white', textAlign:'center', fontSize: '80px'}}> Wish List</h1>
            <hr style={{width:'100%', color: 'white', height: '20px'}} />
-           {this.props.addMovies.map((movie) => (
-              <li>User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
-            ))}
-
-              <div>
+           {/* {this.props.addMovies.map((movie) => (
+           //    <li>User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
+           //  ))}*/}
+           {this.props.movie_img.length !== 0 ?
+              <div className="grid-container">
               {this.props.movie_img.map((movie) => (
+
                   <WishListCard
-                    imageWish={`${IMAGE_BASE_URL}${CART_IMAGE_SIZE}${movie}`}
+                    imageWish={`${IMAGE_BASE_URL}${CART_WISH_IMAGE_SIZE}${movie}`}
                     Movietitle={this.props.addMovies.title}
                     onload={this.showId}
                     id={this.props.addMovies.movieId}
 
-                    />
+                    ></WishListCard>
               ))}
-              </div>
+            </div> : <h1 style={{fontFamily: 'Oleo Script, cursive', color: 'white', textAlign:'center', fontSize: '40px'}}>Empty!</h1>}
 
             {/* <div className="picture-grid">
             // {this.props.movie_img.map((movie) => (
@@ -54,7 +56,7 @@ class reduxCart extends Component {
             // ))}
             // </div>*/}
 
-            {console.log("this is from the wishlist page: ", `${IMAGE_BASE_URL}${CART_IMAGE_SIZE}${this.props.movie_img}`)}
+            {console.log("this is from the wishlist page: ", `${IMAGE_BASE_URL}${CART_WISH_IMAGE_SIZE}${this.props.movie_img}`)}
 
       </React.Fragment>
     );

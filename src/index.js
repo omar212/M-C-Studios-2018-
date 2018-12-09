@@ -10,6 +10,7 @@ import firebase from "firebase";
 import { createStore } from 'redux';
 import reducer from './store/reducers';
 import { Provider } from 'react-redux';
+
 //Provier is a helper comoponent which allows us to inject
 //our into the react component
 
@@ -23,6 +24,8 @@ firebase.auth().onAuthStateChanged(user => {
     console.log('user has signed');
   }
 })
+
+console.log("firebase: ", firebase);
 
 console.log("check the state from redux: ",store.getState());
 
