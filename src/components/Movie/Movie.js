@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { API_URL, API_KEY, TRAILER_LINK, TRAILER_WEB, APPEND_TRAILER, MOVIE_TRAILER, YOUTUBE } from '../../config';
+import { API_URL, API_KEY, MOVIE_TRAILER, YOUTUBE, APPEND_TRAILER } from '../../config';
 import Navigation from '../elements/Navigation/Navigation';
 import MovieInfo from '../elements/MovieInfo/MovieInfo';
 import MovieInfoBar from '../elements/MovieInfoBar/MovieInfoBar';
@@ -40,8 +40,6 @@ class Movie extends Component {
     MovieId: null,
     MovieImage: null,
     cost: 4.99,
-    traile: '',
-    trailer_title_no_space: '',
     youtubeKey: null
   }
 
@@ -50,7 +48,6 @@ class Movie extends Component {
     //First fetch the movie ... //match.params basically matchs the movie id variable in the app.js
     const endpoint = `${API_URL}movie/${this.props.match.params.movieId}?api_key=${API_KEY}&language=en-US`;
     const trailer_endpoint = `${MOVIE_TRAILER}${this.props.match.params.movieId}?api_key=${API_KEY}${APPEND_TRAILER}`
-    // const youtube_endpoint = `${MOVIE_TRAILER}${this.props.match.paramas.movieId}/videos?api_key=${API_KEY}`
     this.fetchItems(endpoint);
     this.fetchTrailerItems(trailer_endpoint);
 
@@ -81,8 +78,6 @@ class Movie extends Component {
               loading: false,
               MovieId: result.id,
               MovieImage: this.state.movie.poster_path,
-              // trailer_title: this.state.movie.title,
-              // trailer_title_no_space: this.state.movie.title.split(' ').join('-')
             })
             var database = firebase.database();
             var ref = database.ref('User');
@@ -94,12 +89,9 @@ class Movie extends Component {
             }
 
             ref.push(data);
-            // console.log("title for trailer: ", this.state.trailer_title)
-            // console.log("title for trailer no space: ", this.state.trailer_title_no_space)
             console.log("MovieId for the cart: ", this.state.MovieId)
             console.log("this movie title is: ", this.state.movie.title)
             console.log("this movie image poster path is: ", this.state.MovieImage)
-            // console.log("trailer link: ", `${TRAILER_LINK}${this.state.trailer_title_no_space}${TRAILER_WEB}`);
           })
         })
       }
@@ -130,7 +122,7 @@ class Movie extends Component {
             }else{
               this.setState({
                 trailer: result.homepage,
-                youtubeKey: result.videos.results[1].key
+                youtubeKey: result.videos.results[0].key
               })
             }
 
@@ -148,8 +140,6 @@ class Movie extends Component {
     return(
       <div className="rmdb-movie">
         <Bar />
-
-        {/*<a href = {`${TRAILER_LINK}${this.state.trailer_title_no_space}${TRAILER_WEB}`}>Click me </a>*/}
         {/*If there is a movie render out the navigation, movieinfo, and movieinfobar else return null*/}
         {this.state.movie ?
           <div>
@@ -159,7 +149,7 @@ class Movie extends Component {
               cart={this.state.addCart}
               addId = {this.state.MovieId}
               trailer = {this.state.youtubeKey}/>
-            
+
           </div>
           : null}
           {this.props.cart ?
