@@ -40,7 +40,10 @@ class Movie extends Component {
     MovieId: null,
     MovieImage: null,
     cost: 4.99,
-    youtubeKey: null
+    youtubeKey: null,
+    genres: [],
+    cartClicked: false,
+    wishClicked: false
   }
 
   componentDidMount(){
@@ -60,6 +63,11 @@ class Movie extends Component {
       console.log(result);
       console.log(result.id);
       console.log(result.poster_path);
+      for(var i = 0; i < result.genres.length;i++){
+        this.setState({
+          genres: this.state.genres.concat(result.genres[i].name)
+        })
+      }
       //remember setState can also accept call back functions
       if(result.status_code){ //if this exist means there is no movie
         this.setState({ loading: false})
@@ -134,7 +142,16 @@ class Movie extends Component {
     })
     .catch(error => console.error('Error', error))
   }
-
+  disableCartClick(){
+    const switched = true;
+    this.setState({cartClicked: switched})
+    console.log("clicked bool: ", this.state.cartClicked);
+  }
+  disableWishClick(){
+    const switched = true;
+    this.setState({wishClicked: switched})
+    console.log("clicked bool: ", this.state.wishClicked);
+  }
 
   render(){
     return(
@@ -148,46 +165,35 @@ class Movie extends Component {
               directors={this.state.directors}
               cart={this.state.addCart}
               addId = {this.state.MovieId}
-              trailer = {this.state.youtubeKey}/>
+              trailer = {this.state.youtubeKey}
+              genre = {this.state.genres}/>
 
           </div>
           : null}
           {this.props.cart ?
-          (<div>
+          <div>
                 <div className="Btns">
-                           <FontAwesomeIcon onClick={() => {this.props.onAddWishId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
-                                           this.props.onAddImageWish(this.state.MovieImage)}} icon="star" size="4x" className="WishlistBtn" />
-
-                           <FontAwesomeIcon onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
-                                           this.props.onAddImageCart(this.state.MovieImage, this.state.MovieId);
-                                           this.props.onAddCost(this.state.MovieId, this.state.cost)}} icon="cart-plus" size="4x"   className="CartBtn" />
-
-                                         {/* <TwitterShareButton  via = "https://moviesandchill.com/" title = "avengers" hashtags = {["#cantwait","#whowantstowatchitwithme"]} round={true} >
-                                         // <TwitterIcon urlsize={32} round={true} />
-                                         // </TwitterShareButton>*/}
-              </div>
-               {this.props.cart.map((movie) => (
-                 <React.Fragment>
-                     <li> Cart List User Id: {movie.userId}
-                       | Movie Id: {movie.movieId}
-                       | Movie Title: {movie.title}
-                       | Movie Image: {movie.image}
-                       | Movie Cost: {this.props.total_cost}
-                     </li>
-                </React.Fragment>
-                 ))}
-
-                {this.props.wish.map((movie) => (
-                  <React.Fragment>
-                    <li> Wish List User Id: {movie.userId} | Movie Id: {movie.movieId} | Movie Title: {movie.title}</li>
-                  </React.Fragment>
-                ))}
-            {this.state.movie ?
-              <div>
-                <MovieInfoBar time={this.state.movie.runtime} budget={this.state.movie.budget} revenue={this.state.movie.revenue} />
-              </div>
-              : null}
-            </div>): null}
+                          <button style={{background:'black', border: '0px solid black'}}
+                               onClick={() => {this.props.onAddWishId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                                             this.props.onAddImageWish(this.state.MovieImage);
+                                                             this.disableWishClick()}}
+                                                             disabled={this.state.wishClicked ? 'disabled' : null}>
+                                                          <FontAwesomeIcon icon="star" size="4x" className="WishlistBtn" />
+                                                        </button>
+                           <button style={{background:'black', border: '0px solid black'}}
+                           onClick={() => {this.props.onAddMovieId(this.state.MovieId, this.state.movie.title, this.state.MovieImage);
+                                                             this.props.onAddImageCart(this.state.MovieImage, this.state.MovieId);
+                                                             this.props.onAddCost(this.state.MovieId, this.state.cost);
+                                                             this.disableCartClick()}}
+                                                             disabled={this.state.cartClicked ? 'disabled' : null}>
+                                                           <FontAwesomeIcon icon="cart-plus" size="4x"   className="CartBtn" />
+                                          </button>
+                </div>
+              {this.state.movie ?
+                <div>
+                  <MovieInfoBar time={this.state.movie.runtime} budget={this.state.movie.budget} revenue={this.state.movie.revenue} />
+              </div>:null}
+            </div>: null}
 
 
         {/*If there are actors for the movie */}
@@ -222,10 +228,11 @@ const mapDispatchToProps = dispatch => {
     onAddMovieId: (id, title, image) => dispatch({type: actionTypes.ADD_MOVIE_ID, cartData:{id: id, title: title, image: image}}),
     onAddWishId: (id, title, image) => dispatch({type: actionTypes.ADD_WISH_LIST_ID, wishData:{id: id, title: title, image: image}}),
     onAddImageCart: (imageId, movieId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId, movieId: movieId}),
-    onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId}),
+    onAddImageWish: (imageId, movieId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId, movieId: movieId}),
     onAddCost: (id, cost) => dispatch({type: actionTypes.ADD_COST, id: id, cost: cost})
   };
 }
+
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Movie);

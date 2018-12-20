@@ -1,5 +1,4 @@
 import React from 'react';
-
 import CardActionArea from '@material-ui/core/CardActionArea';
 import { connect } from 'react-redux';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,23 +18,25 @@ const WishListCard = (props) => {
 
 {/*marginLeft: '105px'*/}
   return (
-    <Card shadow={0} style={{margin: '5%'}}>
-        <CardTitle style={{ height: "68vh", width:"85vw" ,backgroundImage: `url(${props.imageWish})`,backgroundRepeat: 'no-repeat', backgroundSize: "contain"}}> {props.wish.title} </CardTitle>
-        <CardActions style={{backgroundColor: 'gray'}} border>
+    <Card shadow={0} style={{margin: '2%'}}>
+        <CardTitle style={{ height: "75vh", width:"86vw" ,backgroundImage: `url(${props.imageWish})`,backgroundRepeat: 'no-repeat', backgroundSize: "contain"}}> {props.wish.title} </CardTitle>
+      <CardActions style={{backgroundColor: 'gray'}} border>
           <div className="AddBtn">
-            <FontAwesomeIcon onClick={() => {props.onAddMovieId(props.id, props.Movietitle, props.movie_img_wish);
-                            props.onAddImageCart(props.movie_img_wish, props.id);
-                            props.onAddCost(props.id, 4.99)}} icon="cart-plus" size="4x"   className="CartBtn" />
+            <FontAwesomeIcon onClick={() => {props.onAddMovieId(props.movieId, props.Movietitle, props.imageId);
+                            props.onAddImageCart(props.imageId, props.movieId);
+                            props.onAddCost(props.movieId, 4.99)}} icon="cart-plus" size="4x"   className="CartBtn" />
            </div>
+           {/* <div className="TrashBtn">
+               {props.movie_img_wish.map((movieimage) => (
+                   <FontAwesomeIcon onClick = {() => this.props.onDeleteCart(movieimage.imageId)}  style={{marginLeft: "40%", paddingTop: "10px"}} icon="trash-alt" size="2x" />
+              ))}
+          </div> */}
             <div className="TrashBtn">
-              <FontAwesomeIcon onClick = {() => props.onDeleteWish(props.id)}
+              <FontAwesomeIcon onClick = {() => {props.onDeleteWish(props.imageId,props.movieId)}}
                                style={{marginLeft: "40%", paddingTop: "10px"}}
                                icon="trash-alt" size="2x" />
-            </div>
+                           </div>
         </CardActions>
-        <CardMenu style={{height: '50%',color: '#fff'}}>
-            <IconButton name="share" />
-        </CardMenu>
     </Card>
 
   );
@@ -58,7 +59,7 @@ const mapDispatchToProps = dispatch => {
     onAddImageCart: (imageId, movieId) => dispatch({type: actionTypes.ADD_IMAGE_CART, imageId: imageId, movieId: movieId}),
     onAddImageWish: (imageId) => dispatch({type: actionTypes.ADD_IMAGE_WISH, imageId: imageId}),
     onAddCost: (id, cost) => dispatch({type: actionTypes.ADD_COST, id: id, cost: cost}),
-    onDeleteWish: (id) => dispatch({type: actionTypes.DELETE_WISH, id: id})
+    onDeleteWish: (imageId, movieId) => dispatch({type: actionTypes.DELETE_WISH, imageId: imageId, movieId: movieId })
   };
 }
 

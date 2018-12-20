@@ -136,42 +136,14 @@ class Login extends Component {
 
         ) :
           (
-          <div>
             <div>
               <h1 style={{textAlign: 'center'}}>Welcome to M&C Studios Sign Up Page </h1>
+          
+              <StyledFirebaseAuth
+                uiConfig={this.uiConfig}
+                firebaseAuth={firebase.auth()}
+                style={{position:'center'}}/>
             </div>
-            <StyledFirebaseAuth
-              uiConfig={this.uiConfig}
-              firebaseAuth={firebase.auth()}
-              style={{position:'center'}}/>
-            <div style={loginStyles}>
-              <form onSubmit={(event) => {this.authWithEmailPassword(event)}} ref={(form) => {this.loginForm = form}}>
-                <label className="#">
-                  Email
-                  <input
-                    style={{width: "100%"}}
-                    className="#"
-                    name="email"
-                    type="email"
-                    ref={(input) => {this.emailInput = input}}
-                    placeholder="E-mail">
-                  </input>
-                </label>
-                <label className="#">
-                  Password
-                  <input
-                    style={{width: "100%"}}
-                    className="#"
-                    name="password"
-                    type="password"
-                    ref={(input) => {this.passwordInput = input}}
-                    placeholder="Password">
-                  </input>
-                </label>
-                <input style={{width: "100%", marginTop: "5px"}} type="submit" className="#" value="Log In"></input>
-              </form>
-            </div>
-          </div>
         )}
       </div>
     )

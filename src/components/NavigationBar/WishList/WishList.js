@@ -36,11 +36,11 @@ class reduxCart extends Component {
               {this.props.movie_img.map((movie) => (
 
                   <WishListCard
-                    imageWish={`${IMAGE_BASE_URL}${CART_WISH_IMAGE_SIZE}${movie}`}
+                    imageWish={`${IMAGE_BASE_URL}${CART_WISH_IMAGE_SIZE}${movie.imageId}`}
                     Movietitle={this.props.addMovies.title}
                     onload={this.showId}
-                    id={this.props.addMovies.movieId}
-
+                    movieId={movie.movieId}
+                    imageId={movie.imageId}
                     ></WishListCard>
               ))}
             </div> : <h1 style={{fontFamily: 'Oleo Script, cursive', color: 'white', textAlign:'center', fontSize: '40px'}}>Empty!</h1>}
@@ -56,7 +56,7 @@ class reduxCart extends Component {
             // ))}
             // </div>*/}
 
-            {console.log("this is from the wishlist page: ", `${IMAGE_BASE_URL}${CART_WISH_IMAGE_SIZE}${this.props.movie_img}`)}
+
 
       </React.Fragment>
     );

@@ -28,13 +28,6 @@ const MovieInfo = (props) => {
           </div>
             <div className="rmdb-movieinfo-text">
                   <h1>{props.movie.title}</h1>
-                  {/* {props.trailer ?
-                  //
-                  //   <a  href = {`${YOUTUBE}${props.trailer}`}  target="_blank">
-                  //     <FontAwesomeIcon icon = "video" name="film" size="2x" >
-                  //     </FontAwesomeIcon>
-                  //     <h1 style={{fontSize:'20px'}}>Watch Trailer</h1>
-                  //   </a> : null }*/}
                   {props.trailer ?
                   <div className='player-wrapper'>
                      <ReactPlayer
@@ -57,6 +50,14 @@ const MovieInfo = (props) => {
                     return <p key ={i} className="rmdb-director">{element.name}</p>
                   })}
                 </div>
+                <span>
+                <div className="genres">
+                  {/* <b><h4 style={{color: 'white', paddingRight: '10px', marginTop:'15px'}}>Genre: </h4></b>*/}
+                  {props.genre.map( (element, i) => {
+                    return <h5 key = {i} style={{paddingRight: '47px'}}>{element}</h5>
+                  })}
+                </div>
+                </span>
                 <FontAwesome className="fa-film" name="film" size="5x" />
         </div>
       </div>

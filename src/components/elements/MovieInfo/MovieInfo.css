@@ -115,7 +115,19 @@
   position: absolute;
   top: 0;
   right: 0;
-  margin-top: 2%%;
+  height: 150px;
+  margin-left: 35%;
+  /* margin-top: 2%%; */
+}
+
+.genres{
+  margin-top: 10px;
+  padding-top: 460px;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+  margin-left: 45%;  /*31%*/
+  display: -webkit-inline-box;
 }
 
 meter::-webkit-meter-bar {
