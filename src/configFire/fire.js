@@ -3,12 +3,12 @@ import 'firebase/auth';
 
 // Initialize Firebase
 var config = {
-  apiKey: "AIzaSyDVL3Lvrvc0E4i6CiuY3Ay9wkjvZona4y0",
-    authDomain: "login-form-try-2.firebaseapp.com",
-    databaseURL: "https://login-form-try-2.firebaseio.com",
-    projectId: "login-form-try-2",
-    storageBucket: "login-form-try-2.appspot.com",
-    messagingSenderId: "20498174109"
+  apiKey: "AIzaSyDY_ZQTHd4bNNNOZ1lTTOSvUzo0-XuSVJ8",
+    authDomain: "offical-movie-website.firebaseapp.com",
+    databaseURL: "https://offical-movie-website.firebaseio.com",
+    projectId: "offical-movie-website",
+    storageBucket: "offical-movie-website.appspot.com",
+    messagingSenderId: "599088107743"
 };
 
 firebase.initializeApp(config);
