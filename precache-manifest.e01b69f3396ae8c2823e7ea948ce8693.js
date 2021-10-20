@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/M-C-Studios-2018-/static/js/runtime~main.b5e8be65.js"
   },
   {
-    "revision": "3bb7949045cb18603cb975787511dccd",
+    "revision": "32e51c6fd15dd4f00e90cd8fff12a8b4",
     "url": "/M-C-Studios-2018-/index.html"
   }
 ];
