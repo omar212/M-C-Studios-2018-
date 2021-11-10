@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e2d6fb9c52106518fa65",
+    "revision": "9f49f29dcb9852979f32",
     "url": "/M-C-Studios-2018-/static/css/main.b9b347af.chunk.css"
   },
   {
-    "revision": "e2d6fb9c52106518fa65",
-    "url": "/M-C-Studios-2018-/static/js/main.e2d6fb9c.chunk.js"
+    "revision": "9f49f29dcb9852979f32",
+    "url": "/M-C-Studios-2018-/static/js/main.9f49f29d.chunk.js"
   },
   {
     "revision": "074275f7501efb80cf79",
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/M-C-Studios-2018-/static/js/runtime~main.b5e8be65.js"
   },
   {
-    "revision": "32e51c6fd15dd4f00e90cd8fff12a8b4",
+    "revision": "b987cd66bca71c936dd635b04341eabf",
     "url": "/M-C-Studios-2018-/index.html"
   }
 ];
