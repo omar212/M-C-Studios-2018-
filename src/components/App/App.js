@@ -24,7 +24,7 @@ class App extends Component {
     var database = firebase.database();
     return (
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <React.Fragment> {/* instead of using many divs */}
           <Header />
           <Switch>
