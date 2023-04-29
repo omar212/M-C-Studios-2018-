@@ -25,10 +25,10 @@ class App extends Component {
     return (
     <Provider store={store}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <React.Fragment> {/* instead of using many divs */}
+        <React.Fragment>
           <Header />
           <Switch>
-            <Route exact path="/" component={Login} />
+            <Route exact path="/" component={Home} />
             <Route exact path = "/Home" component={Home} />
             <Route exact path = "/WishList" component={WishList} />
             <Route exact path = "/Cart" component={reduxCart} />
