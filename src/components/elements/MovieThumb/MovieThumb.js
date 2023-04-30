@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 const MovieThumb = (props) => {
   return(
     <div className="rmdb-moviethumb">
-      {console.log("is it clickable", props.clickable)}
       {props.clickable ?
       <Link to={{ pathname: `/${props.movieId}`, movieName: `${props.movieName}`}}> {/*sending the movie id with the link*/}
         <img src={props.image} alt="moviethumb" /> {/*this shows the link */}

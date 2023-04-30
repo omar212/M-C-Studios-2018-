@@ -1,5 +1,22 @@
-.Navigation {
-  font-size: 20px;
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.layout__header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border:1px solid red;
+}
+
+Navigation {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
 
 }
 

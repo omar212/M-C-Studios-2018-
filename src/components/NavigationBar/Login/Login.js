@@ -7,6 +7,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Home from '../../Home/Home';
 import * as actionTypes from '../../../store/actions';
 import { connect } from 'react-redux';
+import './Login.css'
 
 const loginStyles = {
   width: "90%",
@@ -117,6 +118,8 @@ class Login extends Component {
       // })
 
     })
+
+    console.log('this.state.isSignedIn: ', this.state.isSignedIn)
   }
 
   render() {
@@ -128,7 +131,7 @@ class Login extends Component {
       <div>
         {this.state.isSignedIn ? (
             <div style={{backgroundColor:'black'}}>
-              <button style= {{ marginBottom: '25%', borderRadius: '25px', fontSize: '20px' , backgroundColor:'black', color: 'white', float: 'right'}} onClick={() => firebase.auth().signOut()}>Sign out!</button>
+              <button className='sign-out-button' onClick={() => firebase.auth().signOut()}>Sign out!</button>
               <h1 style={{margin:'0 0 auto',textAlign: 'center',height: '100px', backgroundColor:'black', color: 'white'}}>Welcome {firebase.auth().currentUser.displayName}</h1>
               <Home />
             </div>
